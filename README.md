@@ -66,6 +66,10 @@ are deliberately tuned to over-report rather than miss something.
 Tested against Postgres 17 / Supabase. Requires Postgres 15+ for the
 `security_invoker` check; everything else works on 12+.
 
+## Longer write-ups
+
+- [`infinite recursion detected in policy for relation`](docs/rls-infinite-recursion.md) — why the loop happens, the three fixes that do not work, and the four details that decide whether the one that does is safe or a hole.
+
 ## Licence
 
 MIT. Take it, fork it, put it in your CI.
