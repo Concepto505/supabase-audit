@@ -84,7 +84,7 @@ using (user_id = (select auth.uid()));
 A user sees their own membership rows directly, with no subquery. Everything else
 goes through the function. No cycle exists anywhere.
 
-## Four details that decide whether this is safe or a hole
+## Five details that decide whether this is safe or a hole
 
 **`revoke execute ... from public` is not optional.** In Postgres a newly created
 function is executable by `PUBLIC` by default. On Supabase that means the anon key
