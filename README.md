@@ -73,6 +73,8 @@ Tested against Postgres 17 / Supabase. Requires Postgres 15+ for the
 - [The RLS mistake that costs you 10,000x and never throws an error](docs/rls-performance-initplan.md) — `auth.uid()` vs `(select auth.uid())`, with Supabase's own benchmark numbers, and why the `SECURITY DEFINER` helper case is the catastrophic one.
 - [Every function you create is callable by `anon`, until you say otherwise](docs/security-definer-public-execute.md) — Postgres grants `EXECUTE` to `PUBLIC` by default, what that means when the anon key is in your bundle, and the `DROP`/`CREATE` trap that reopens a function you already closed.
 
+- [Your Edge Function CORS error is usually not a CORS problem](docs/edge-functions-cors.md) — the platform JWT gate that eats the preflight, the missing headers on your error path, and the `curl` that tells the three failures apart.
+
 ## Licence
 
 MIT. Take it, fork it, put it in your CI.
