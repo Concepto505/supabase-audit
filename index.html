@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Night Fix — Supabase &amp; Postgres</title>
+<meta name="description" content="Stuck on a Supabase or Postgres bug tonight? Flat $100. You pay after it's fixed.">
+<style>
+:root{--bg:#0c0d10;--fg:#e8e9ed;--dim:#9195a3;--line:#22242c;--acc:#3ecf8e;--card:#131419}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:660px;margin:0 auto;padding:0 16px}
+header{padding:64px 0 40px}
+h1{font-size:clamp(28px,6vw,40px);line-height:1.15;margin:0 0 16px;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--acc)}
+.sub{font-size:clamp(17px,3vw,19px);color:var(--dim);margin:0 0 28px}
+.price{display:inline-flex;align-items:baseline;gap:10px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:14px 18px;margin-bottom:12px}
+.price b{font-size:30px;letter-spacing:-.02em}
+.price span{color:var(--dim);font-size:14px}
+.note{color:var(--acc);font-size:15px;font-weight:600;margin:0 0 36px}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:var(--dim);font-weight:600;margin:40px 0 14px;padding-top:24px;border-top:1px solid var(--line)}
+ul{margin:0;padding:0;list-style:none}
+li{padding:9px 0 9px 26px;position:relative;border-bottom:1px solid var(--line)}
+li:last-child{border-bottom:0}
+li:before{content:"";position:absolute;left:4px;top:18px;width:6px;height:6px;border-radius:50%;background:var(--acc)}
+li code{background:#1b1d24;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#cdd1dc}
+ol{margin:0;padding-left:20px;color:var(--dim)}
+ol li{border:0;padding:6px 0}
+ol li:before{display:none}
+ol b{color:var(--fg)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0;color:var(--dim);font-size:15px}
+.box b{color:var(--fg)}
+a.cta{display:block;text-align:center;background:var(--acc);color:#05140d;font-weight:700;text-decoration:none;padding:16px;border-radius:10px;margin:28px 0 10px;font-size:17px}
+.fine{color:var(--dim);font-size:13.5px;text-align:center;margin:0 0 56px}
+footer{border-top:1px solid var(--line);padding:22px 0 60px;color:var(--dim);font-size:13.5px}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#fff;--fg:#14161c;--dim:#5d6270;--line:#e6e8ee;--card:#f7f8fa;--acc:#127a52}
+:root:not([data-theme="dark"]) li code{background:#eceef3;color:#2c3040}
+:root:not([data-theme="dark"]) a.cta{color:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Your Supabase is broken and it's <em>the middle of the night.</em></h1>
+  <p class="sub">I'm awake. Send me the error, I'll fix it before you wake up.</p>
+  <div class="price"><b>$100</b><span>flat · no hourly · no scope creep</span></div>
+  <p class="note">→ You pay after it works. Not fixed, not paid.</p>
+</header>
+
+<h2>What I actually fix</h2>
+<ul>
+  <li><b>RLS that won't behave.</b> <code>infinite recursion detected in policy</code>, rows leaking across tenants, or a policy that silently returns zero rows.</li>
+  <li><b>Permission errors that make no sense.</b> <code>SECURITY DEFINER</code> functions exposed to <code>anon</code>, views that lost <code>security_invoker</code>, <code>permission denied for table</code>.</li>
+  <li><b>Edge Functions failing in production.</b> CORS preflight passing but POST dying, 150s timeouts, cold-start errors, secrets not loading.</li>
+  <li><b>Migrations that won't apply.</b> Diverged history, non-idempotent migrations, numbering collisions, a <code>db push</code> that wants to drop your data.</li>
+  <li><b>PostgREST queries returning the wrong shape.</b> Ambiguous embeds with two foreign keys, <code>PGRST300</code>, schema cache stale after a change.</li>
+  <li><b>Postgres that got slow overnight.</b> Missing index, a query plan that flipped, connection pool exhaustion, lock contention.</li>
+</ul>
+
+<h2>How it works</h2>
+<ol>
+  <li><b>You send</b> the error, the relevant schema or file, and read access if it's needed.</li>
+  <li><b>I diagnose and tell you the root cause</b> in plain language — usually within the hour, free, before any money moves.</li>
+  <li><b>I fix it</b> and hand you the patch plus a one-line explanation of why it broke.</li>
+  <li><b>You verify it works.</b> Then you pay $100 by PayPal. If it isn't fixed, you owe nothing and you keep the diagnosis.</li>
+</ol>
+
+<div class="box">
+  <b>Why the diagnosis is free:</b> you have no reason to trust a stranger at 2am. So I take the risk, not you. If I can't solve it, I'll tell you straight away instead of billing you for four hours of guessing.
+</div>
+
+<h2>Straight answers</h2>
+<div class="box"><b>Who are you?</b> David Borrás, developer based in Spain, registered self-employed. I build production Supabase/Postgres apps every day — invoicing engines, OCR pipelines, multi-tenant systems with real RLS. I don't have a public portfolio, which is exactly why I don't ask you to pay up front.</div>
+<div class="box"><b>Is my code safe?</b> I only ask for the minimum needed to fix the problem. No credentials pasted in chat — use a scoped key and revoke it when we're done. Happy to sign an NDA before you send anything.</div>
+<div class="box"><b>What if it's bigger than one bug?</b> I'll tell you after the free diagnosis. The $100 covers one clearly-defined problem. Anything larger, we agree a price first or you walk away.</div>
+
+<a class="cta" href="mailto:david_bc3@hotmail.es?subject=Night%20Fix%20%E2%80%94%20Supabase%20emergency&amp;body=What's%20broken%3A%0A%0AError%20message%3A%0A%0AStack%20(Supabase%20%2F%20Postgres%20%2F%20framework)%3A%0A%0AHow%20urgent%3A%0A">Send me the error →</a>
+<p class="fine">Reply usually within the hour while it's night in Europe.</p>
+
+<footer>
+  David Borrás · Independent developer, Spain · <a href="mailto:david_bc3@hotmail.es" style="color:inherit">david_bc3@hotmail.es</a><br>
+  Payment on completion via PayPal (goods &amp; services, so you keep buyer protection).
+</footer>
+</div>
+</body>
+</html>
