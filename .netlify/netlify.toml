@@ -7,7 +7,7 @@ redirects = []
 [functions."*"]
 
 [build]
-publish = "/private/tmp/claude-501/-Users-concepto505/eee5eaa6-d622-4d1d-a8de-eca755655992/scratchpad/nightfix"
+publish = "/Users/concepto505/Developer/nightfix"
 publishOrigin = "default"
 
 [build.environment]
