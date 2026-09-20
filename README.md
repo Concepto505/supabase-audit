@@ -27,6 +27,7 @@ curl -O https://raw.githubusercontent.com/Concepto505/supabase-audit/main/audit.
 | 9 | Policies that **query their own table** | `infinite recursion detected in policy for relation`. |
 | 10 | **Foreign keys with no index** | Every join and every cascading delete scans the whole table. |
 | 11 | **Extensions installed in `public`** | Widens the API surface PostgREST exposes. |
+| 12 | **INSERT policy with no SELECT policy** | `RETURNING` is gated by the SELECT policy, so inserts pass in the SQL Editor and 42501 in the app. |
 
 ## What the output looks like
 
@@ -40,7 +41,7 @@ Illustrative — table names invented, shape is real:
 | HIGH | Possible policy recursion | `public.team_members · members_read` | Move the lookup into a SECURITY DEFINER function. |
 | PERFORMANCE | auth.uid() re-evaluated per row | `public.documents · owner_can_read` | Wrap it: `(select auth.uid())`. |
 
-Nothing came back? Then these eleven failure modes are not present. That is a
+Nothing came back? Then these twelve failure modes are not present. That is a
 useful answer too.
 
 ## Two of these deserve a note

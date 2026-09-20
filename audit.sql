@@ -207,6 +207,25 @@ ext_in_public as (
   where n.nspname = 'public' and e.extname not in ('plpgsql')
 ),
 
+-- 12. An INSERT policy with no SELECT policy. Postgres applies SELECT policies
+--     to the RETURNING clause, so the row comes back through the API only if
+--     the caller may also read it.
+insert_without_select as (
+  select
+    2 as sev, 'HIGH' as severity, 'INSERT policy with no SELECT policy' as check_name,
+    n.nspname||'.'||c.relname as object,
+    'Inserts succeed in a plain SQL session but fail through the API as soon as the row '||
+    'is returned, because RETURNING is gated by the SELECT policy and there is none. '||
+    'This is the "works in the SQL Editor, 42501 in the app" case, and the INSERT policy '||
+    'it sends you to debug is innocent.' as detail,
+    'Add a SELECT policy, or insert without asking for the row back (no .select()).' as fix
+  from pg_class c
+  join pg_namespace n on n.oid = c.relnamespace
+  where c.relkind = 'r' and n.nspname = 'public' and c.relrowsecurity
+    and exists (select 1 from pg_policy p where p.polrelid = c.oid and p.polcmd = 'a')
+    and not exists (select 1 from pg_policy p where p.polrelid = c.oid and p.polcmd in ('r','*'))
+),
+
 all_findings as (
   select * from rls_off
   union all select * from rls_no_policy
@@ -219,6 +238,7 @@ all_findings as (
   union all select * from policy_recursion
   union all select * from fk_no_index
   union all select * from ext_in_public
+  union all select * from insert_without_select
 )
 
 select severity, check_name as check, object, detail, fix
@@ -226,7 +246,7 @@ from all_findings
 order by sev, check_name, object;
 
 -- ============================================================
---  Nothing came back? Then the eleven failure modes that cause
+--  Nothing came back? Then the twelve failure modes that cause
 --  most Supabase production incidents are not present. Good.
 --
 --  Something came back and you want it fixed rather than
