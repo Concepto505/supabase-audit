@@ -68,7 +68,8 @@ Tested against Postgres 17 / Supabase. Requires Postgres 15+ for the
 
 ## Longer write-ups
 
-- [`infinite recursion detected in policy for relation`](docs/rls-infinite-recursion.md) — why the loop happens, the three fixes that do not work, and the four details that decide whether the one that does is safe or a hole.
+- [`infinite recursion detected in policy for relation`](docs/rls-infinite-recursion.md) — why the loop happens, the three fixes that do not work, and the five details that decide whether the one that does is safe or a hole.
+- [Every function you create is callable by `anon`, until you say otherwise](docs/security-definer-public-execute.md) — Postgres grants `EXECUTE` to `PUBLIC` by default, what that means when the anon key is in your bundle, and the `DROP`/`CREATE` trap that reopens a function you already closed.
 
 ## Licence
 
