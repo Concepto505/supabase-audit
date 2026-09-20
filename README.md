@@ -28,6 +28,21 @@ curl -O https://raw.githubusercontent.com/Concepto505/supabase-audit/main/audit.
 | 10 | **Foreign keys with no index** | Every join and every cascading delete scans the whole table. |
 | 11 | **Extensions installed in `public`** | Widens the API surface PostgREST exposes. |
 
+## What the output looks like
+
+Illustrative — table names invented, shape is real:
+
+| severity | check | object | fix |
+|---|---|---|---|
+| CRITICAL | SECURITY DEFINER open to PUBLIC | `public.promote_user(uuid)` | `revoke execute on function public.promote_user(uuid) from public;` |
+| CRITICAL | RLS disabled | `public.invoices` | `alter table public.invoices enable row level security;` |
+| HIGH | RLS on, zero policies | `public.audit_log` | Add a policy, or confirm it is service-role only. |
+| HIGH | Possible policy recursion | `public.team_members · members_read` | Move the lookup into a SECURITY DEFINER function. |
+| PERFORMANCE | auth.uid() re-evaluated per row | `public.documents · owner_can_read` | Wrap it: `(select auth.uid())`. |
+
+Nothing came back? Then these eleven failure modes are not present. That is a
+useful answer too.
+
 ## Two of these deserve a note
 
 **#4 is the one that surprises people.** In Postgres, a newly created function
